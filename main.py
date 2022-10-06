@@ -7,8 +7,9 @@ def deco(func):
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
-        print(f'Execution time sorting algorithm by select - {time.time() - start}')
+        print(f'execution time - {time.time() - start} second')
         return result
+
     return wrapper
 
 
@@ -30,7 +31,12 @@ def sorted_by_select(arr):
         sorted_arr.append(arr.pop(find_smallest(arr)))
     return sorted_arr
 
+def gen_arr(elements=1000):
+    arr = [random.randint(1, 100) for _ in range(elements)]
+    return arr
 
 if __name__ == '__main__':
-    arr = [random.randint(1, 100) for _ in range(10000)]
-    print(sorted_by_select(arr))
+    elements = 10000
+    print(f'Sorting algorithm by select for {elements} pieces: ', end='')
+    sorted_by_select(gen_arr(elements))
+
