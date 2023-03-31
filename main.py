@@ -1,13 +1,15 @@
 # Sorting algorithms with decorator for calculate execution time
 import time
 import random
+# import colorama
 
 
+# Decorator for checking execution time
 def deco(func):
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
-        print(f'execution time - {time.time() - start} second')
+        print(f'execution time = {time.time() - start} second')
         return result
 
     return wrapper
@@ -27,16 +29,35 @@ def find_smallest(arr):
 @deco
 def sorted_by_select(arr):
     sorted_arr = []
-    for i in range(len(arr)):
+    # colorama.init()
+    xx = len(arr)
+    for i in range(xx):
+        # Progress bar
+        # print(f'\r\033[KNumber {i} of {xx}', end='')
         sorted_arr.append(arr.pop(find_smallest(arr)))
+    print()
+    print(f'Sorting algorithm by select  for {elements} pieces: ', end='')
+
     return sorted_arr
+
+
+# Bubble sort
+@deco
+def bubble_sort(arr):
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+    print(f'The bubble sorting algorithm for {elements} pieces: ', end='')
+    return arr
+
 
 def gen_arr(elements=1000):
     arr = [random.randint(1, 100) for _ in range(elements)]
     return arr
 
+
 if __name__ == '__main__':
     elements = 10000
-    print(f'Sorting algorithm by select for {elements} pieces: ', end='')
     sorted_by_select(gen_arr(elements))
-
+    bubble_sort(gen_arr(elements))
