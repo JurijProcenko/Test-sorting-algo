@@ -1,6 +1,7 @@
 # Sorting algorithms with decorator for calculate execution time
 import time
 import random
+
 # import colorama
 
 
@@ -9,7 +10,7 @@ def deco(func):
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
-        print(f'execution time = {time.time() - start} second')
+        print(f"execution time = {time.time() - start} second")
         return result
 
     return wrapper
@@ -36,7 +37,7 @@ def sorted_by_select(arr):
         # print(f'\r\033[KNumber {i} of {xx}', end='')
         sorted_arr.append(arr.pop(find_smallest(arr)))
     print()
-    print(f'Sorting algorithm by select  for {elements} pieces: ', end='')
+    print(f"Sorting algorithm by select  for {elements} pieces: ", end="")
 
     return sorted_arr
 
@@ -48,8 +49,19 @@ def bubble_sort(arr):
         for j in range(i, len(arr)):
             if arr[i] > arr[j]:
                 arr[i], arr[j] = arr[j], arr[i]
-    print(f'The bubble sorting algorithm for {elements} pieces: ', end='')
+    print(f"The bubble sorting algorithm for {elements} pieces: ", end="")
     return arr
+
+
+# Quick sort
+def quick_sort(arr):
+    if len(arr) < 2:
+        return arr
+    else:
+        pivot = arr[0]
+        less = [i for i in arr[1:] if i <= pivot]
+        greater = [i for i in arr[1:] if i > pivot]
+    return quick_sort(less) + [pivot] + quick_sort(greater)
 
 
 def gen_arr(elements=1000):
@@ -57,7 +69,17 @@ def gen_arr(elements=1000):
     return arr
 
 
-if __name__ == '__main__':
-    elements = 10000
+if __name__ == "__main__":
+    elements = 40_000
+    start = time.time()
+    quick_sort(gen_arr(elements))
+    print(
+        f"The quick sorting algorithm for {elements} pieces: execution time = {time.time() - start} second"
+    )
     sorted_by_select(gen_arr(elements))
     bubble_sort(gen_arr(elements))
+    start = time.time()
+    sorted(gen_arr(elements))
+    print(
+        f"The built sorting algorithm for {elements} pieces: execution time = {time.time() - start} second"
+    )    
